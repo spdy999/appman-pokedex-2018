@@ -17,8 +17,8 @@ const Home = () => {
 
   return (
     <div>
-      {cards.map(pokemon => (
-        <li>{JSON.stringify(pokemon)}</li>
+      {cards.map(card => (
+        <li>{JSON.stringify(card)}</li>
       ))}
     </div>
   );
