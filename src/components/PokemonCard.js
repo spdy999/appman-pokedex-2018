@@ -26,26 +26,24 @@ const PokemonCard = props => {
   const classes = useStyles();
   return (
     <Card className={classes.card}>
-      <CardActionArea className={classes.cardAction}>
-        <CardContent>
+      <div className={classes.cardAction}>
+        <div>
           <img
             alt={`Avatar n°${pokemon.id + 1}`}
             src={pokemon.imageUrl}
             className={classes.cardImg}
           />
-        </CardContent>
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            {pokemon.name}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            <div>hp {pokemon.hp}</div>
-            <div>str {pokemon.strength}</div>
-            <div>weak {pokemon.weakness}</div>
-            <div>happiness {pokemon.happiness}</div>
-          </Typography>
-        </CardContent>
-      </CardActionArea>
+        </div>
+        <div>
+          <h2>{pokemon.name}</h2>
+          <div>
+            <p>hp {pokemon.hp}</p>
+            <p>str {pokemon.strength}</p>
+            <p>weak {pokemon.weakness}</p>
+            <p>happiness {pokemon.happiness}</p>
+          </div>
+        </div>
+      </div>
     </Card>
   );
 };
