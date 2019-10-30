@@ -1,7 +1,7 @@
 const calHp = hp => (hp >= 100 ? 100 : 0);
 
 const calStrength = (attacks = []) => {
-  debugger;
+  // debugger;
   const strength = attacks.length * 50;
   return strength <= 100 ? strength : 100;
 };
@@ -15,10 +15,11 @@ const calDamage = attacks => {
   const sumDam = damageVal.reduce((sum, damVal) => sum + damVal, 0);
   return sumDam;
 };
-const calHappiness = (hp, dam, wn) => ((hp / 10) * (dam / 10) + 10 - wn) / 5;
+const calHappiness = (hp, dam, wn) => (hp / 10 + dam / 10 + 10 - wn) / 5;
+// ((hp / 10) * (dam / 10) + 10 - wn) / 5;
 
 export const calData = pokemon => {
-  debugger;
+  // debugger;
   const hp = calHp(pokemon.hp);
   const strength = calStrength(pokemon.attacks || []);
   const weakness = calWeakness(pokemon.weaknesses || []);
