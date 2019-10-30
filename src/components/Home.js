@@ -38,7 +38,7 @@ export default function Home() {
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
-  const [pokedex, setPokedex] = useState([]);
+  const [pokedex, onChangePokedex] = useState([]);
 
   const handleOpen = () => {
     setOpen(true);
@@ -49,7 +49,7 @@ export default function Home() {
   };
   useEffect(() => {
     const localStoragePokedex = getLocalStorageItem('pokedex');
-    setPokedex(localStoragePokedex || []);
+    onChangePokedex(localStoragePokedex || []);
   }, []);
 
   return (
@@ -82,6 +82,7 @@ export default function Home() {
           open={open}
           handleClose={handleClose}
           modalStyle={modalStyle}
+          onChangePokedex={onChangePokedex}
         />
       )}
     </div>

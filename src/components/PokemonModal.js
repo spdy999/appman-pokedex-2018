@@ -30,20 +30,17 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function PokemonModal(props) {
-  const { open, handleClose, modalStyle } = props;
+  const { open, handleClose, modalStyle, onChangePokedex } = props;
   const [cards, setCards] = useState([]);
   const [pokemonData, setPokemonData] = useState([]);
   const [freePokemon, setFreePokemon] = useState([]);
   const [addedPokemon, addPokemon] = useState({});
 
   useEffect(() => {
-    // async function fetchData() {
     Axios.get('http://localhost:3030/api/cards').then(res => {
       setCards(res.data.cards);
       debugger;
     });
-    // }
-    // fetchData();
   }, []);
 
   useEffect(() => {
@@ -70,7 +67,9 @@ export default function PokemonModal(props) {
     const pokedex = getLocalStorageItem('pokedex') || [];
     if (!R.isEmpty(addedPokemon)) {
       setLocalStorageItem('pokedex', [...pokedex, addedPokemon]);
+      // const freePokemons = calFreePokemon(freePokemon, [addedPokemon]);
       setFreePokemon(calFreePokemon(freePokemon, [addedPokemon]));
+      onChangePokedex([...pokedex, addedPokemon]);
     }
   }, [addPokemon, addedPokemon]);
 
@@ -82,7 +81,6 @@ export default function PokemonModal(props) {
       open={open}
       onClose={handleClose}
     >
-      {/* <div className={classes.paper}> */}
       <div style={modalStyle} className={classes.paper}>
         <h2 id="simple-modal-title">Search...</h2>
         <Paper
