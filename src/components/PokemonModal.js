@@ -37,15 +37,13 @@ export default function PokemonModal(props) {
   const [addedPokemon, addPokemon] = useState({});
 
   useEffect(() => {
-    async function fetchData() {
-      const fetchedPokemons = await Axios.get(
-        'http://localhost:3030/api/cards',
-      );
-      // debugger;
-
-      setCards(fetchedPokemons.data.cards);
-    }
-    fetchData();
+    // async function fetchData() {
+    Axios.get('http://localhost:3030/api/cards').then(res => {
+      setCards(res.data.cards);
+      debugger;
+    });
+    // }
+    // fetchData();
   }, []);
 
   useEffect(() => {
@@ -56,14 +54,14 @@ export default function PokemonModal(props) {
       ...calData(pokemon),
     }));
     setPokemonData(mapPokemonData);
-    // debugger;
+    debugger;
   }, [cards]);
 
   useEffect(() => {
     const pokedex = getLocalStorageItem('pokedex') || [];
-    debugger;
+    // debugger;
     setFreePokemon(
-      pokedex ? pokemonData : calFreePokemon(pokemonData, pokedex),
+      pokedex.length === 0 ? pokemonData : calFreePokemon(pokemonData, pokedex),
     );
     // debugger;
   }, [pokemonData]);
@@ -72,7 +70,7 @@ export default function PokemonModal(props) {
     const pokedex = getLocalStorageItem('pokedex') || [];
     if (!R.isEmpty(addedPokemon)) {
       setLocalStorageItem('pokedex', [...pokedex, addedPokemon]);
-      setFreePokemon(calFreePokemon(pokemonData, [addedPokemon]));
+      setFreePokemon(calFreePokemon(freePokemon, [addedPokemon]));
     }
   }, [addPokemon, addedPokemon]);
 
@@ -84,6 +82,7 @@ export default function PokemonModal(props) {
       open={open}
       onClose={handleClose}
     >
+      {/* <div className={classes.paper}> */}
       <div style={modalStyle} className={classes.paper}>
         <h2 id="simple-modal-title">Search...</h2>
         <Paper
@@ -98,7 +97,11 @@ export default function PokemonModal(props) {
             {freePokemon.map(pokemon => {
               return (
                 <ListItem key={pokemon.id}>
-                  <PokemonCard pokemon={pokemon} addPokemon={addPokemon} />
+                  <PokemonCard
+                    pokemon={pokemon}
+                    addPokemon={addPokemon}
+                    addButton
+                  />
                 </ListItem>
               );
             })}

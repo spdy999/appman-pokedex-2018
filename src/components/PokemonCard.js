@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const PokemonCard = props => {
-  const { pokemon, addPokemon } = props;
+  const { pokemon, addPokemon, addButton } = props;
 
   const classes = useStyles();
   return (
@@ -44,13 +44,15 @@ const PokemonCard = props => {
         </div>
         <div className={classes.content}>
           <div className={classes.add}>
-            <button
-              onClick={() => {
-                addPokemon(pokemon);
-              }}
-            >
-              ADD+
-            </button>
+            {addButton && (
+              <button
+                onClick={() => {
+                  addPokemon(pokemon);
+                }}
+              >
+                ADD+
+              </button>
+            )}
           </div>
           <h2>{pokemon.name}</h2>
           <div>
