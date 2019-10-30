@@ -35,6 +35,11 @@ const useStyles = makeStyles(theme => ({
     marginBottom: 30,
     backgroundColor: colors.cardBackground,
   },
+  openModalButton: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: colors.bottomBarBackground,
+  },
   cardAction: {
     display: 'flex',
     flexDirection: 'row',
@@ -42,6 +47,10 @@ const useStyles = makeStyles(theme => ({
   },
   cardImg: {
     height: 300,
+  },
+  footer: {
+    height: '10%',
+    backgroundColor: colors.bottomBarBackground,
   },
   cardHeader: {
     display: 'flex',
@@ -53,6 +62,9 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     width: '100%',
     flexDirection: 'column',
+  },
+  wrapper: {
+    height: 768,
   },
 }));
 
@@ -75,14 +87,14 @@ export default function Home() {
   }, []);
 
   return (
-    <div>
+    <div className={classes.wrapper}>
       <Paper
         style={{
-          maxHeight: 768,
-          height: 768,
+          height: '90%',
           maxWidth: 1024,
           width: 1024,
-          overflow: 'auto',
+          overflowY: 'auto',
+          overflowX: 'hidden',
           alignContent: 'center',
         }}
       >
@@ -91,10 +103,16 @@ export default function Home() {
             <PokemonCard pokemon={pokemon} useStyles={useStyles} />
           ))}
         </GridList>
-        <button type="button" onClick={handleOpen}>
+      </Paper>
+      <footer className={classes.footer}>
+        <button
+          type="button"
+          onClick={handleOpen}
+          className={classes.openModalButton}
+        >
           Open Modal
         </button>
-      </Paper>
+      </footer>
       {open && (
         <PokemonModal
           classes={classes}
