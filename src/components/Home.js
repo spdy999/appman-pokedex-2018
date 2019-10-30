@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import PokemonModal from './PokemonModal';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
 import Paper from '@material-ui/core/Paper';
+import GridList from '@material-ui/core/GridList';
 import PokemonCard from './PokemonCard';
 import { getLocalStorageItem } from '../utils/calculation';
-
-// function rand() {
-//   return Math.round(Math.random() * 20) - 10;
-// }
 
 function getModalStyle() {
   const top = 50;
@@ -26,10 +21,37 @@ const useStyles = makeStyles(theme => ({
   paper: {
     position: 'absolute',
     width: 400,
-    backgroundColor: theme.palette.background.paper,
     border: '2px solid #000',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
+  },
+  gridList: {
+    height: 1024,
+    'justify-content': 'space-between',
+  },
+  card: {
+    width: 480,
+    height: 300,
+    backgroundColor: '#e4e4e4',
+  },
+  cardAction: {
+    display: 'flex',
+    flexDirection: 'row',
+    'justify-content': 'flex-start',
+  },
+  cardImg: {
+    height: 300,
+  },
+  add: {
+    display: 'flex',
+    width: '100%',
+    flexDirection: 'row',
+    'justify-content': 'flex-end',
+  },
+  content: {
+    display: 'flex',
+    width: '100%',
+    flexDirection: 'column',
   },
 }));
 
@@ -61,20 +83,18 @@ export default function Home() {
       <Paper
         style={{
           maxHeight: 768,
+          height: 768,
           maxWidth: 1024,
+          width: 1024,
           overflow: 'auto',
           alignContent: 'center',
         }}
       >
-        <List>
-          {pokedex.map(pokemon => {
-            return (
-              <ListItem key={pokemon.id}>
-                <PokemonCard pokemon={pokemon} />
-              </ListItem>
-            );
-          })}
-        </List>
+        <GridList cellHeight={160} className={classes.gridList} cols={2}>
+          {pokedex.map(pokemon => (
+            <PokemonCard pokemon={pokemon} useStyles={useStyles} />
+          ))}
+        </GridList>
       </Paper>
       {open && (
         <PokemonModal

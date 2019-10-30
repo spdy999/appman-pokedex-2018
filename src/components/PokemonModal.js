@@ -27,6 +27,29 @@ const useStyles = makeStyles(theme => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
+  card: {
+    width: 768,
+    backgroundColor: '#f3f4f7',
+  },
+  cardAction: {
+    display: 'flex',
+    flexDirection: 'row',
+    'justify-content': 'flex-start',
+  },
+  cardImg: {
+    height: 300,
+  },
+  add: {
+    display: 'flex',
+    width: '100%',
+    flexDirection: 'row',
+    'justify-content': 'flex-end',
+  },
+  content: {
+    display: 'flex',
+    width: '100%',
+    flexDirection: 'column',
+  },
 }));
 
 export default function PokemonModal(props) {
@@ -97,6 +120,7 @@ export default function PokemonModal(props) {
                 <ListItem key={pokemon.id}>
                   <PokemonCard
                     pokemon={pokemon}
+                    useStyles={useStyles}
                     addPokemon={addPokemon}
                     addButton
                   />

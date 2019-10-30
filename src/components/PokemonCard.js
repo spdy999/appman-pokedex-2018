@@ -1,35 +1,35 @@
 import React from 'react';
 import Card from '@material-ui/core/Card';
-import { makeStyles } from '@material-ui/core/styles';
+// import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
-  card: {
-    width: 768,
-    backgroundColor: '#f3f4f7',
-  },
-  cardAction: {
-    display: 'flex',
-    flexDirection: 'row',
-    'justify-content': 'flex-start',
-  },
-  cardImg: {
-    height: 300,
-  },
-  add: {
-    display: 'flex',
-    width: '100%',
-    flexDirection: 'row',
-    'justify-content': 'flex-end',
-  },
-  content: {
-    display: 'flex',
-    width: '100%',
-    flexDirection: 'column',
-  },
-}));
+// const useStyles = makeStyles(theme => ({
+//   card: {
+//     width: 768,
+//     backgroundColor: '#f3f4f7',
+//   },
+//   cardAction: {
+//     display: 'flex',
+//     flexDirection: 'row',
+//     'justify-content': 'flex-start',
+//   },
+//   cardImg: {
+//     height: 300,
+//   },
+//   add: {
+//     display: 'flex',
+//     width: '100%',
+//     flexDirection: 'row',
+//     'justify-content': 'flex-end',
+//   },
+//   content: {
+//     display: 'flex',
+//     width: '100%',
+//     flexDirection: 'column',
+//   },
+// }));
 
 const PokemonCard = props => {
-  const { pokemon, addPokemon, addButton } = props;
+  const { pokemon, addPokemon, addButton, useStyles } = props;
 
   const classes = useStyles();
   return (
