@@ -9,6 +9,7 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Checkbox from '@material-ui/core/Checkbox';
 import Avatar from '@material-ui/core/Avatar';
 import Paper from '@material-ui/core/Paper';
+import { calData } from '../utils/calculation';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -19,20 +20,30 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Home() {
-  const [cards, setPokemon] = useState([]);
+  const [cards, setCards] = useState([]);
+  const [pokemonData, setPokemonData] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
       const fetchedPokemons = await Axios.get(
         'http://localhost:3030/api/cards',
       );
-      const cards = fetchedPokemons.data.cards;
-      console.log(cards);
 
-      setPokemon(cards);
+      setCards(fetchedPokemons.data.cards);
     }
     fetchData();
   }, []);
+
+  useEffect(() => {
+    const mapPokemonData = cards.map(pokemon => ({
+      id: pokemon.id,
+      name: pokemon.name,
+      imageUrl: pokemon.imageUrl,
+      ...calData(pokemon),
+    }));
+    setPokemonData(mapPokemonData);
+  }, [cards]);
+
   const classes = useStyles();
   const [checked, setChecked] = React.useState([1]);
 
@@ -52,19 +63,22 @@ export default function Home() {
   return (
     <Paper style={{ maxHeight: 768, maxWidth: 1024, overflow: 'auto' }}>
       <List dense className={classes.root}>
-        {cards.map(card => {
-          const labelId = `checkbox-list-secondary-label-${card.id}`;
+        {pokemonData.map(pokemon => {
+          const labelId = `checkbox-list-secondary-label-${pokemon.id}`;
           return (
-            <ListItem key={card.id} button>
+            <ListItem key={pokemon.id} button>
               <ListItemAvatar>
-                <Avatar alt={`Avatar n°${card.id + 1}`} src={card.imageUrl} />
+                <Avatar
+                  alt={`Avatar n°${pokemon.id + 1}`}
+                  src={pokemon.imageUrl}
+                />
               </ListItemAvatar>
-              <ListItemText id={labelId} primary={`Line item ${card.name}`} />
+              <ListItemText id={labelId} primary={`${pokemon.name}`} />
               <ListItemSecondaryAction>
                 <Checkbox
                   edge="end"
-                  onChange={handleToggle(card)}
-                  checked={checked.indexOf(card) !== -1}
+                  onChange={handleToggle(pokemon)}
+                  checked={checked.indexOf(pokemon) !== -1}
                   inputProps={{ 'aria-labelledby': labelId }}
                 />
               </ListItemSecondaryAction>
