@@ -13,6 +13,7 @@ import {
 } from '../utils/calculation';
 import PokemonCard from './PokemonCard';
 import Modal from '@material-ui/core/Modal';
+import { colors } from '../constants/constants';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -29,7 +30,12 @@ const useStyles = makeStyles(theme => ({
   },
   card: {
     width: 768,
-    backgroundColor: '#f3f4f7',
+    backgroundColor: colors.cardBackground,
+    colorAddButton: colors.colorAddButton,
+  },
+
+  addButton: {
+    color: colors.colorAddButton,
   },
   cardAction: {
     display: 'flex',
@@ -39,11 +45,11 @@ const useStyles = makeStyles(theme => ({
   cardImg: {
     height: 300,
   },
-  add: {
+  cardHeader: {
     display: 'flex',
     width: '100%',
     flexDirection: 'row',
-    'justify-content': 'flex-end',
+    'justify-content': 'space-between',
   },
   content: {
     display: 'flex',
@@ -62,7 +68,7 @@ export default function PokemonModal(props) {
   useEffect(() => {
     Axios.get('http://localhost:3030/api/cards').then(res => {
       setCards(res.data.cards);
-      debugger;
+      // debugger;
     });
   }, []);
 
@@ -74,7 +80,7 @@ export default function PokemonModal(props) {
       ...calData(pokemon),
     }));
     setPokemonData(mapPokemonData);
-    debugger;
+    // debugger;
   }, [cards]);
 
   useEffect(() => {

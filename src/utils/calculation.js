@@ -15,13 +15,11 @@ export const calFreePokemon = (fetchPokemons, pokedex) => {
 const calHp = hp => (hp >= 100 ? 100 : 0);
 
 const calStrength = (attacks = []) => {
-  // debugger;
   const strength = attacks.length * 50;
   return strength <= 100 ? strength : 100;
 };
 const calWeakness = weakness => {
-  const weaknessVal = weakness.length * 100;
-  return weaknessVal <= 100 ? weaknessVal : 100;
+  return weakness.length === 1 ? 100 : 0;
 };
 const calDamage = attacks => {
   const damages = attacks.map(att => att.damage);
