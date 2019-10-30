@@ -64,9 +64,7 @@ export default function PokemonModal(props) {
         <Paper
           style={{
             maxHeight: 500,
-            // width: '100%',
             maxWidth: 1024,
-            // width: 1024,
             overflow: 'auto',
             alignContent: 'center',
           }}
@@ -74,28 +72,14 @@ export default function PokemonModal(props) {
           <List>
             {pokemonData.map(pokemon => {
               return (
-                <ListItem key={pokemon.id} button>
+                <ListItem key={pokemon.id}>
                   <PokemonCard pokemon={pokemon} />
                 </ListItem>
               );
             })}
           </List>
         </Paper>
-        {/* <PokemonModal /> */}
       </div>
     </Modal>
   );
-  // return (
-  // <Paper style={{ maxHeight: 768, maxWidth: 1024, overflow: 'auto' }}>
-  //   <List dense className={classes.root}>
-  //     {pokemonData.map(pokemon => {
-  //       return (
-  //         <ListItem key={pokemon.id} button>
-  //           <PokemonCard pokemon={pokemon} />
-  //         </ListItem>
-  //       );
-  //     })}
-  //   </List>
-  // </Paper>
-  // );
 }

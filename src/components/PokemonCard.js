@@ -1,8 +1,5 @@
 import React from 'react';
 import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
@@ -17,6 +14,17 @@ const useStyles = makeStyles(theme => ({
   },
   cardImg: {
     height: 300,
+  },
+  add: {
+    display: 'flex',
+    width: '100%',
+    flexDirection: 'row',
+    'justify-content': 'flex-end',
+  },
+  content: {
+    display: 'flex',
+    width: '100%',
+    flexDirection: 'column',
   },
 }));
 
@@ -34,7 +42,10 @@ const PokemonCard = props => {
             className={classes.cardImg}
           />
         </div>
-        <div>
+        <div className={classes.content}>
+          <div className={classes.add}>
+            <button>ADD+</button>
+          </div>
           <h2>{pokemon.name}</h2>
           <div>
             <p>hp {pokemon.hp}</p>
