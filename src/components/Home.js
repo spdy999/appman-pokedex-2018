@@ -26,12 +26,21 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(2, 4, 3),
   },
   gridList: {
-    height: 1024,
+    // height: 768,
     'justify-content': 'space-between',
+    // 'align-content': 'space-between',
+
+    // maxHeight: 768,
+    // // height: 768,
+    // maxWidth: 1024,
+    // width: 1024,
+    // overflow: 'auto',
+    // alignContent: 'center',
   },
   card: {
     width: 480,
     height: 300,
+    marginBottom: 30,
     backgroundColor: '#e4e4e4',
   },
   cardAction: {
@@ -76,10 +85,6 @@ export default function Home() {
 
   return (
     <div>
-      <button type="button" onClick={handleOpen}>
-        Open Modal
-      </button>
-
       <Paper
         style={{
           maxHeight: 768,
@@ -95,6 +100,9 @@ export default function Home() {
             <PokemonCard pokemon={pokemon} useStyles={useStyles} />
           ))}
         </GridList>
+        <button type="button" onClick={handleOpen}>
+          Open Modal
+        </button>
       </Paper>
       {open && (
         <PokemonModal
