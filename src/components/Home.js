@@ -4,7 +4,11 @@ import PokemonModal from './PokemonModal';
 import Paper from '@material-ui/core/Paper';
 import GridList from '@material-ui/core/GridList';
 import PokemonCard from './PokemonCard';
-import { getLocalStorageItem } from '../utils/calculation';
+import {
+  getLocalStorageItem,
+  deletePokemon,
+  setLocalStorageItem,
+} from '../utils/calculation';
 import { colors } from '../constants/constants';
 
 function getModalStyle() {
@@ -34,6 +38,9 @@ const useStyles = makeStyles(theme => ({
     height: 300,
     marginBottom: 30,
     backgroundColor: colors.cardBackground,
+  },
+  deleteButton: {
+    color: colors.colorAddButton,
   },
   openModalButton: {
     width: '100%',
@@ -73,6 +80,7 @@ export default function Home() {
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
   const [pokedex, onChangePokedex] = useState([]);
+  const [deletedPokemon, setDeletedPokemon] = useState(null);
 
   const handleOpen = () => {
     setOpen(true);
@@ -85,6 +93,18 @@ export default function Home() {
     const localStoragePokedex = getLocalStorageItem('pokedex');
     onChangePokedex(localStoragePokedex || []);
   }, []);
+
+  useEffect(() => {
+    if (deletedPokemon) {
+      debugger;
+      const localStoragePokedex = getLocalStorageItem('pokedex');
+      const del = deletePokemon(localStoragePokedex, deletedPokemon);
+      onChangePokedex(del);
+      setLocalStorageItem('pokedex', del);
+      debugger;
+    }
+    debugger;
+  }, [deletedPokemon]);
 
   return (
     <div className={classes.wrapper}>
@@ -100,7 +120,12 @@ export default function Home() {
       >
         <GridList cellHeight={160} className={classes.gridList} cols={2}>
           {pokedex.map(pokemon => (
-            <PokemonCard pokemon={pokemon} useStyles={useStyles} />
+            <PokemonCard
+              pokemon={pokemon}
+              useStyles={useStyles}
+              deleteButton
+              setDeletedPokemon={setDeletedPokemon}
+            />
           ))}
         </GridList>
       </Paper>
@@ -110,7 +135,7 @@ export default function Home() {
           onClick={handleOpen}
           className={classes.openModalButton}
         >
-          Open Modal
+          +
         </button>
       </footer>
       {open && (

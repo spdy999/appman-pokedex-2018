@@ -12,6 +12,12 @@ export const calFreePokemon = (fetchPokemons, pokedex) => {
   const pokedexGroup = R.groupBy(pk => pk.id, pokedex);
   return fetchPokemons.filter(fetchPokemon => !pokedexGroup[fetchPokemon.id]);
 };
+
+export const deletePokemon = (localStoragePokemon, deletedPokemon) => {
+  return localStoragePokemon.filter(
+    pokemon => pokemon.id !== deletedPokemon.id,
+  );
+};
 const calHp = hp => (hp >= 100 ? 100 : 0);
 
 const calStrength = (attacks = []) => {

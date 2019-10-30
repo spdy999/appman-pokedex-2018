@@ -2,7 +2,14 @@ import React from 'react';
 import Card from '@material-ui/core/Card';
 
 const PokemonCard = props => {
-  const { pokemon, addPokemon, addButton, useStyles } = props;
+  const {
+    pokemon,
+    deleteButton,
+    addPokemon,
+    addButton,
+    useStyles,
+    setDeletedPokemon,
+  } = props;
 
   const classes = useStyles();
   return (
@@ -25,7 +32,18 @@ const PokemonCard = props => {
                   addPokemon(pokemon);
                 }}
               >
-                ADD+
+                ADD
+              </h2>
+            )}
+            {deleteButton && (
+              <h2
+                className={classes.deleteButton}
+                onClick={() => {
+                  debugger;
+                  setDeletedPokemon(pokemon);
+                }}
+              >
+                X
               </h2>
             )}
           </div>
