@@ -1,3 +1,17 @@
+import * as R from 'ramda';
+
+export const getLocalStorageItem = name => {
+  return JSON.parse(localStorage.getItem(name));
+};
+
+export const setLocalStorageItem = (name, obj) => {
+  localStorage.setItem(name, JSON.stringify(obj));
+};
+
+export const calFreePokemon = (fetchPokemons, pokedex) => {
+  const pokedexGroup = R.groupBy(pk => pk.id, pokedex);
+  return fetchPokemons.filter(fetchPokemon => !pokedexGroup[fetchPokemon.id]);
+};
 const calHp = hp => (hp >= 100 ? 100 : 0);
 
 const calStrength = (attacks = []) => {

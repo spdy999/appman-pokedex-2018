@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const PokemonCard = props => {
-  const { pokemon } = props;
+  const { pokemon, addPokemon } = props;
 
   const classes = useStyles();
   return (
@@ -44,7 +44,13 @@ const PokemonCard = props => {
         </div>
         <div className={classes.content}>
           <div className={classes.add}>
-            <button>ADD+</button>
+            <button
+              onClick={() => {
+                addPokemon(pokemon);
+              }}
+            >
+              ADD+
+            </button>
           </div>
           <h2>{pokemon.name}</h2>
           <div>

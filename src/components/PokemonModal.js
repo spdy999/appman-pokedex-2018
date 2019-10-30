@@ -1,10 +1,16 @@
+import * as R from 'ramda';
 import React, { useEffect, useState } from 'react';
 import Axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Paper from '@material-ui/core/Paper';
-import { calData } from '../utils/calculation';
+import {
+  calData,
+  calFreePokemon,
+  getLocalStorageItem,
+  setLocalStorageItem,
+} from '../utils/calculation';
 import PokemonCard from './PokemonCard';
 import Modal from '@material-ui/core/Modal';
 
@@ -12,12 +18,10 @@ const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
     maxWidth: 768,
-    // backgroundColor: theme.palette.background.paper,
   },
   paper: {
     position: 'absolute',
     width: 800,
-    // alignContent: 'center',
     backgroundColor: theme.palette.background.paper,
     border: '2px solid #000',
     boxShadow: theme.shadows[5],
@@ -29,12 +33,15 @@ export default function PokemonModal(props) {
   const { open, handleClose, modalStyle } = props;
   const [cards, setCards] = useState([]);
   const [pokemonData, setPokemonData] = useState([]);
+  const [freePokemon, setFreePokemon] = useState([]);
+  const [addedPokemon, addPokemon] = useState({});
 
   useEffect(() => {
     async function fetchData() {
       const fetchedPokemons = await Axios.get(
         'http://localhost:3030/api/cards',
       );
+      // debugger;
 
       setCards(fetchedPokemons.data.cards);
     }
@@ -49,7 +56,25 @@ export default function PokemonModal(props) {
       ...calData(pokemon),
     }));
     setPokemonData(mapPokemonData);
+    // debugger;
   }, [cards]);
+
+  useEffect(() => {
+    const pokedex = getLocalStorageItem('pokedex') || [];
+    debugger;
+    setFreePokemon(
+      pokedex ? pokemonData : calFreePokemon(pokemonData, pokedex),
+    );
+    // debugger;
+  }, [pokemonData]);
+
+  useEffect(() => {
+    const pokedex = getLocalStorageItem('pokedex') || [];
+    if (!R.isEmpty(addedPokemon)) {
+      setLocalStorageItem('pokedex', [...pokedex, addedPokemon]);
+      setFreePokemon(calFreePokemon(pokemonData, [addedPokemon]));
+    }
+  }, [addPokemon, addedPokemon]);
 
   const classes = useStyles();
   return (
@@ -70,10 +95,10 @@ export default function PokemonModal(props) {
           }}
         >
           <List>
-            {pokemonData.map(pokemon => {
+            {freePokemon.map(pokemon => {
               return (
                 <ListItem key={pokemon.id}>
-                  <PokemonCard pokemon={pokemon} />
+                  <PokemonCard pokemon={pokemon} addPokemon={addPokemon} />
                 </ListItem>
               );
             })}
